@@ -6,4 +6,6 @@ class Tutor(User):
         pass
     def UploadContent(self):
         pass
+    def __str__(self):
+        return f"{self.FullName} {self.BirthDate} {self.Phone} {self.Email}"
     
