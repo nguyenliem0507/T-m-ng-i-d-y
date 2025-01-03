@@ -20,6 +20,7 @@ from tutor import views  # Import views của bạn
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('', include('home.url')),
     path('', include('tutor.urls')),
     path('', include('student.urls')),
 ]
