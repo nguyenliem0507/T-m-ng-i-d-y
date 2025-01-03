@@ -43,7 +43,8 @@ INSTALLED_APPS = [
     'tutor',
     'moderator',
     'on_demand_tutor',
-    'admin_app'
+    'admin_app',
+    'home'
 ]
 
 MIDDLEWARE = [
