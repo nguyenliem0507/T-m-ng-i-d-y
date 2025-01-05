@@ -1,6 +1,7 @@
-// var hljs = require('highlight.js/lib/index.js')
+import hljs from 'highlight.js';
 
-// export { hljs }
-import hljs from 'highlight.js/lib/index';
+try {
+  window.hljs = hljs;
+} catch (e) {}
 
 export { hljs };

@@ -85,10 +85,6 @@
       border-color: map-get($colors, border) !important;
     }
 
-    .menu-inner > .menu-header::before {
-      background-color: map-get($colors, border);
-    }
-
     .menu-block::before {
       background-color: map-get($colors, muted-color);
     }
@@ -104,7 +100,7 @@
 
     .menu-inner > .menu-item.open .menu-item.open > .menu-toggle::before,
     .menu-inner > .menu-item.open .menu-item.active > .menu-link::before {
-      box-shadow: 0 0 0 2px $active-bg;
+      box-shadow: 0 0 0 1px $active-bg;
     }
 
     .ps__thumb-y,
@@ -113,6 +109,12 @@
         map-get($colors, active-color),
         if($contrast-percent > 0.75, map-get($colors, opacity) - 0.4, map-get($colors, opacity) - 0.2)
       ) !important;
+    }
+  }
+  // ? Match toggle border to menu bg belwo xl screen
+  @include media-breakpoint-down($menu-collapsed-layout-breakpoint) {
+    .app-brand .layout-menu-toggle {
+      border: 7px solid map-get($colors, bg) !important;
     }
   }
 }

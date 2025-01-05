@@ -11,13 +11,19 @@
     shift-color($background, -$list-group-item-bg-scale, $card-bg),
     shift-color($background, $list-group-item-bg-scale, $card-bg)
   );
-  $color: if(
-    $parent == '.list-group-item-dark' and $dark-style,
-    color-contrast($background),
-    shift-color($background, $list-group-item-color-scale)
+  $border-color: if(
+    $dark-style,
+    if(
+      $parent == '.list-group-item-dark',
+      color-contrast($background),
+      shift-color($background, -$list-group-item-color-scale, $card-bg)
+    ),
+    shift-color($background, $list-group-item-color-scale, $card-bg)
   );
+  $color: shift-color($background, $list-group-item-color-scale);
   $hover-background: shade-color($background-color, $list-group-item-bg-hover-scale);
   #{$parent} {
+    border-color: $border-color;
     background-color: $background-color;
     color: $color !important;
   }
@@ -27,14 +33,16 @@
     color: $color;
     &:hover,
     &:focus {
+      border-color: $border-color;
       background-color: $hover-background;
       color: $color;
     }
 
     &.active {
-      border-color: $background;
-      background-color: $background;
-      color: if($color, $color, color-contrast($background));
+      border-color: $border-color !important;
+      background-color: $background !important;
+      // color: if($color, $color, color-contrast($background));
+      color: color-contrast($background) !important;
     }
   }
 }
@@ -46,8 +54,8 @@
     &,
     &:hover,
     &:focus {
-      border-color: $background;
-      background-color: $background;
+      background-color: rgba-to-hex(rgba($background, 0.16), $card-bg);
+      color: $background;
     }
   }
 }

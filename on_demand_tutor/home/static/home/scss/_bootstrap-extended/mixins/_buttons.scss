@@ -2,7 +2,14 @@
 // *******************************************************************************
 
 // Basic
-@mixin button-variant($background: null, $border: null, $active-background: null, $active-border: null) {
+@mixin button-variant(
+  $background: null,
+  $border: null,
+  $hover-background: null,
+  $hover-border: null,
+  $active-background: null,
+  $active-border: null
+) {
 }
 @mixin template-button-variant($parent, $background, $color: null, $border: null) {
   $background: $background;
@@ -31,9 +38,6 @@
     tint-color($border, $btn-active-border-tint-amount)
   );
   $active-color: color-contrast($active-background);
-  $disabled-background: $background;
-  $disabled-border: $border;
-  $disabled-color: color-contrast($disabled-background);
 
   #{$parent} {
     color: $color;
@@ -43,10 +47,9 @@
     box-shadow: 0 0.125rem 0.25rem 0 rgba($background, 0.4);
 
     &:hover {
-      color: $hover-color;
-      @include gradient-bg($hover-background);
-      border-color: $hover-border;
-      transform: $btn-hover-transform;
+      color: $hover-color !important;
+      @include gradient-bg($hover-background !important);
+      border-color: $hover-border !important;
     }
 
     .btn-check:focus + &,
@@ -55,38 +58,41 @@
       color: $hover-color;
       @include gradient-bg($hover-background);
       border-color: $hover-border;
-      transform: $btn-focus-transform;
-      box-shadow: none;
     }
 
     .btn-check:checked + &,
     .btn-check:active + &,
     &:active,
     &.active,
+    &.show.dropdown-toggle,
     .show > &.dropdown-toggle {
-      color: $active-color;
-      background-color: $active-background;
+      color: $active-color !important;
+      background-color: $active-background !important;
       // Remove CSS gradients if they're enabled
-      background-image: if($enable-gradients, none, null);
-      border-color: $active-border;
-
-      &:focus {
-        box-shadow: none;
-      }
+      background-image: if($enable-gradients, none !important, null);
+      border-color: $active-border !important;
     }
 
     &.disabled,
     &:disabled {
-      box-shadow: none;
+      color: $color !important;
+      background-color: $background !important;
+      // Remove CSS gradients if they're enabled
+      background-image: if($enable-gradients, none !important, null);
+      border-color: $border !important;
     }
   }
 
-  //? Button groups border (Uncomment if needed)
-  // .btn-group #{$parent},
-  // .input-group #{$parent} {
-  //   border-right: $input-btn-border-width solid $active-background;
-  //   border-left: $input-btn-border-width solid $active-background;
-  // }
+  // Button groups
+  .btn-group #{$parent},
+  .input-group #{$parent} {
+    border-right: $input-btn-border-width solid $active-background;
+    border-left: $input-btn-border-width solid $active-background;
+  }
+  .btn-group-vertical #{$parent} {
+    border-top-color: $active-background;
+    border-bottom-color: $active-background;
+  }
 }
 
 // Outline
@@ -118,11 +124,10 @@
     background: transparent;
 
     &:hover {
-      color: $color-hover;
-      background-color: $hover-background;
-      border-color: $hover-background;
-      box-shadow: 0 0.125rem 0.25rem 0 rgba($background, 0.4);
-      transform: $btn-hover-transform;
+      color: $color-hover !important;
+      background-color: $hover-background !important;
+      border-color: $hover-background !important;
+      box-shadow: 0 0.125rem 0.25rem 0 rgba($background, 0.4) !important;
     }
 
     .btn-check:focus + &,
@@ -130,8 +135,6 @@
       color: $color-hover;
       background-color: $hover-background;
       border-color: $hover-background;
-      box-shadow: none;
-      transform: $btn-focus-transform;
     }
 
     .btn-check:checked + &,
@@ -139,17 +142,15 @@
     &:active,
     &.active,
     &.dropdown-toggle.show {
-      color: $color-hover;
-      background-color: $active-background;
-      border-color: $active-background;
-      &:focus {
-        box-shadow: none;
-      }
+      color: $color-hover !important;
+      background-color: $active-background !important;
+      border-color: $active-background !important;
     }
 
     &.disabled,
     &:disabled {
-      box-shadow: none;
+      color: $color !important;
+      border-color: $color !important;
     }
   }
 
@@ -166,6 +167,6 @@
   .show > #{$parent}.dropdown-toggle .badge {
     background: $color-hover;
     border-color: $color-hover;
-    color: if(alpha($color) ==1, $color, color-contrast($color-hover));
+    color: $color;
   }
 }

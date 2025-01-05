@@ -1,6 +1,5 @@
 """
 URL configuration for on_demand_tutor project.
-
 The `urlpatterns` list routes URLs to views. For more information please see:
     https://docs.djangoproject.com/en/5.1/topics/http/urls/
 Examples:
@@ -16,11 +15,10 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
-from tutor import views  # Import views của bạn
-
+from tutor import views
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', include('home.url')),
-    path('', include('tutor.urls')),
-    path('', include('student.urls')),
+    # path('', include('tutor.urls')),
+    # path('', include('student.urls')),
+    path('', include('home.urls')),
 ]

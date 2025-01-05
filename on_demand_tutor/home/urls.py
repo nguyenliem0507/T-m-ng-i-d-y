@@ -1,7 +1,6 @@
 from django.contrib import admin
-from django.urls import path, include
-from tutor import views  # Import views của bạn
-from .import view
+from django.urls import include, path
+from .import views
 urlpatterns = [
-    path('', views.home, name= "home")
+    path('', views.home, name = "home"),
 ]

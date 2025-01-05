@@ -7,10 +7,8 @@
 }
 
 .dropdown-menu {
-  margin: $dropdown-spacer 0;
+  margin-top: 1px !important;
   box-shadow: $dropdown-box-shadow;
-  // Animations
-  animation: dropdownAnimation 0.1s;
 
   // Mega dropdown inside the dropdown menu
   .mega-dropdown > & {
@@ -27,7 +25,10 @@
 }
 // Dropdown item line height
 .dropdown-item {
-  line-height: $dropdown-link-line-height;
+  li:not(:first-child) &,
+  .dropdown-menu &:not(:first-child) {
+    margin-top: 2px;
+  }
 }
 
 // Hidden dropdown toggle arrow
@@ -44,23 +45,26 @@
 @if $enable-caret {
   // Dropdown arrow
   .dropdown-toggle::after {
-    @include caret-down;
+    @include caret-down($caret-width);
   }
   // Dropend arrow
   .dropend .dropdown-toggle::after {
-    @include caret-right;
+    @include caret-right($caret-width);
   }
   // Dropstart arrow
   .dropstart .dropdown-toggle::before {
-    @include caret-left;
+    @include caret-left($caret-width);
   }
   // Dropup arrow
   .dropup .dropdown-toggle::after {
-    @include caret-up;
+    @include caret-up($caret-width);
   }
 
   .dropstart .dropdown-toggle::before,
   .dropend .dropdown-toggle::after {
     vertical-align: $caret-vertical-align;
   }
+}
+.dropdown-toggle-split:after {
+  margin-left: 0 !important;
 }
