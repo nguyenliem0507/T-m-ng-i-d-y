@@ -65,11 +65,11 @@ WSGI_APPLICATION = 'on_demand_tutor.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'mysql.connector.django',
-        'NAME': 'DemandTutorDB',
+        'NAME': 'chickenplus',
         'USER': 'root',
-        'PASSWORD': '0507',
+        'PASSWORD': '123456',
         'HOST': '127.0.0.1',
-        'PORT': '3307'
+        'PORT': '3306'
     }
 }
 # Password validation

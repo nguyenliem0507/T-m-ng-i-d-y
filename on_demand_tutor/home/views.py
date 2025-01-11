@@ -1,3 +1,4 @@
+from urllib import request
 from django.core.exceptions import ValidationError
 from django.core.validators import validate_email, RegexValidator
 from django.shortcuts import render, redirect
@@ -114,3 +115,19 @@ def tutor_login(request):
         except Student.DoesNotExist:
             return HttpResponse("Invalid credentials. Please check your username or password.")
     return render(request, 'tutor/tutor-login.html')
+
+    if request.method == 'POST':
+        email = request.POST.get('email', tutor.Email)
+        phone = request.POST.get('phone', tutor.Phone)
+        degree = request.POST.get('degree', tutor.Degree)
+        password = request.POST.get('password', tutor.Password)
+
+        tutor.Email = email
+        tutor.Phone = phone
+        tutor.Degree = degree
+        tutor.Password = password
+        tutor.save()
+
+        return redirect('/tutor-edited')
+
+    return render(request, 'tutor/tutor-edited.html', {'tutor': tutor})
