@@ -1,0 +1,58 @@
+{% extends "master.html" %} 
+
+{%block navbar%} 
+    {% include "../includes/navbar.html" %}
+{%endblock%}
+
+{%block content%}
+<div class="card container mt-5 p-0">
+    <h5 class="card-header">Tutor index</h5>
+    <div class="table-responsive text-nowrap w-100">
+      <table class="table">
+        <thead>
+          <tr>
+            <th>Full Name</th>
+            <th>Birth Date</th>
+            <th>Phone</th>
+            <th>Email</th>
+            <th>Gender</th>
+            <th>Degree/Certificate</th>            
+            <th>Actions</th>            
+          </tr>
+        </thead>
+        <tbody class="table-border-bottom-0">          
+          {% for item in tutor %}
+            <tr class="table-default">
+            <td><strong>{{item.FullName}}</strong></td>
+            <td>{{item.BirthDate}}</td>
+            <td>{{item.Phone}}</td>
+            <td>{{item.Email}}</td>
+            <td>{{item.Gender}}</td>
+            <td>{{item.Degree}}</td>
+            <td>
+              <div class="dropdown">
+                <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown">
+                  <i class="bx bx-dots-vertical-rounded"></i>
+                </button>
+                <div class="dropdown-menu">
+                  <a class="dropdown-item" href="javascript:void(0);"
+                    ><i class="bx bx-edit-alt me-1"></i> Edit</a
+                  >
+                  <a class="dropdown-item" href="javascript:void(0);"
+                    ><i class="bx bx-trash me-1"></i> Delete</a
+                  >
+                </div>
+              </div>
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+{%endblock%}
+
+{%block left-menu%} 
+    {% include "../includes/left-menu.html" %}
+{%endblock%}
+
