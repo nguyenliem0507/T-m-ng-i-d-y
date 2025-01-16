@@ -28,6 +28,7 @@ def login_view(request):
         try:
             student = Student.objects.get(Username=username)
             if student.Password == password:  
+                request.session['username'] = username
                 return redirect('/tutor-index')  
             else:
                 return HttpResponse("Invalid credentials. Please check your username or password.")
@@ -129,4 +130,24 @@ def tutor_edited(request):
 
     return render(request, 'tutor/tutor-edited.html', {'tutor': tutor})
 
+def student_edited(request):
+    username = request.session.get('username')
+    student = get_object_or_404(Student, Username=username)
+
+    if request.method == 'POST':
+        email = request.POST.get('email')
+        phone = request.POST.get('phone')
+        password = request.POST.get('password')
+
+        if email:
+            student.Email = email
+        if phone:
+            student.Phone = phone
+        if password:
+            student.Password = password
+
+        student.save()
+        return redirect('/student-edited')
+
+    return render(request, 'student/student-edited.html', {'student': student})
 
