@@ -9,4 +9,6 @@ urlpatterns = [
     path('tutor-edited/', views.tutor_edited, name='tutor-edited'),
     path('student-edited/', views.student_edited, name='student-edited'),
     path('student-book/<str:tutor_username>/', views.student_book, name='student-book'),
+    path('student-schedule/', views.student_schedule, name='student-schedule'),
+    path('delete-booking/<int:booking_id>/', views.delete_booking, name='delete-booking'),
 ]

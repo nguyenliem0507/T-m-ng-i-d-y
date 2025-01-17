@@ -7,6 +7,7 @@ from tutor.models import Tutor
 from student.models import Student
 from booking.models import Booking
 from django.shortcuts import get_object_or_404
+from django.views.decorators.csrf import csrf_exempt
 
 # Create your views here.
 
@@ -182,4 +183,16 @@ def student_book(request, tutor_username):
 
     return render(request, 'student/student-book.html', {'tutor': tutor})
 
+def student_schedule(request):
+    username = request.session.get('username')
+    student = get_object_or_404(Student, Username=username)  
 
+    bookings = Booking.objects.filter(student=student).select_related('tutor')
+
+    return render(request, 'student/student-schedule.html', {'bookings': bookings})
+
+@csrf_exempt
+def delete_booking(request, booking_id):
+    booking = get_object_or_404(Booking, id=booking_id)
+    booking.delete()
+    return redirect('student-schedule')
