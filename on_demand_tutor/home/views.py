@@ -5,6 +5,7 @@ from django.http import HttpResponse
 from django.template import loader
 from tutor.models import Tutor
 from student.models import Student
+from booking.models import Booking
 from django.shortcuts import get_object_or_404
 
 # Create your views here.
@@ -150,4 +151,35 @@ def student_edited(request):
         return redirect('/student-edited')
 
     return render(request, 'student/student-edited.html', {'student': student})
+
+def student_book(request, tutor_username):
+    username = request.session.get('username')
+    
+    # Lấy tutor theo username
+    tutor = get_object_or_404(Tutor, Username=tutor_username)
+    student = get_object_or_404(Student, Username=username)
+
+    if request.method == 'POST':
+        start_date = request.POST.get('start_date')
+        end_date = request.POST.get('end_date')
+
+        # Kiểm tra nếu lịch đã trùng
+        if Booking.objects.filter(
+            tutor=tutor, start_date__lte=end_date, end_date__gte=start_date
+        ).exists():
+            return HttpResponse("This tutor is already booked for the selected time.")
+
+        # Tạo booking mới
+        booking = Booking(
+            student=student,
+            tutor=tutor,
+            start_date=start_date,
+            end_date=end_date
+        )
+        booking.save()
+
+        return redirect('/tutor-index')
+
+    return render(request, 'student/student-book.html', {'tutor': tutor})
+
 
