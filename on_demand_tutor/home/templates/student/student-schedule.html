@@ -1,6 +1,6 @@
-{% extends "master.html" %} 
+{% extends "master.html" %}
 
-{%block content%}
+{% block content %}
 <div class="card container mt-5 p-0">
   <div class="d-flex justify-content-between align-items-center px-3 py-2">
       <h5 class="card-header mb-0">Booked Schedule</h5>
@@ -13,6 +13,7 @@
                   <th>Tutor Name</th>
                   <th>Start Date</th>
                   <th>End Date</th>
+                  <th>Feedback</th>
                   <th>Action</th>            
               </tr>
           </thead>
@@ -23,15 +24,46 @@
                   <td>{{ booking.start_date }}</td>
                   <td>{{ booking.end_date }}</td>
                   <td>
+                      <!-- Feedback Icon -->
+                      <button type="button" class="btn btn-link" data-bs-toggle="modal" data-bs-target="#feedbackModal{{ booking.id }}">
+                          <i class="bi bi-chat-dots-fill fs-3"></i>
+                      </button>
+                  </td>
+                  <td>
                       <form method="POST" action="{% url 'delete-booking' booking.id %}">
                           {% csrf_token %}
                           <button type="submit" class="btn btn-danger">Cancel</button>
                       </form>
                   </td>
               </tr>
+
+              <!-- Feedback Modal -->
+              <div class="modal fade" id="feedbackModal{{ booking.id }}" tabindex="-1" aria-labelledby="feedbackModalLabel{{ booking.id }}" aria-hidden="true">
+                  <div class="modal-dialog">
+                      <div class="modal-content">
+                          <div class="modal-header">
+                              <h5 class="modal-title" id="feedbackModalLabel{{ booking.id }}">Leave Feedback for {{ booking.tutor.FullName }}</h5>
+                              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                          </div>
+                          <div class="modal-body">
+                              <form method="POST" action="{% url 'leave-feedback' booking.id %}">
+                                  {% csrf_token %}
+                                  <div class="mb-3">
+                                      <label for="feedback" class="form-label">Feedback</label>
+                                      <textarea class="form-control" id="feedback" name="feedback" rows="3" required></textarea>
+                                  </div>
+                                  <div class="modal-footer">
+                                      <button type="button" class="btn btn-secondary me-5" data-bs-dismiss="modal">Close</button>
+                                      <button type="submit" class="btn btn-primary">Submit Feedback</button>
+                                  </div>
+                              </form>
+                          </div>
+                      </div>
+                  </div>
+              </div>
               {% endfor %}
           </tbody>
       </table>
   </div>
 </div>
-{%endblock%}
+{% endblock %}

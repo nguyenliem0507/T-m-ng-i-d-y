@@ -1,6 +1,6 @@
 {% extends "master.html" %} 
 
-{%block navbar%} 
+{% block navbar %} 
 <nav class="navbar bg-body-tertiary">
   <div class="container">
     <a class="navbar-brand" href="/student-edited">
@@ -11,11 +11,22 @@
     </a>
   </div>
 </nav>
-{%endblock%}
+{% endblock %}
 
-{%block content%}
+{% block content %}
 <div class="card container mt-5 p-0">
-    <h5 class="card-header">Tutor index</h5>
+    <div class="card-header d-flex justify-content-between align-items-center">
+        <h5 class="mb-0">Tutor Index</h5>
+        <form method="GET" action="" class="d-flex">
+            <input 
+                type="text" 
+                name="search" 
+                class="form-control me-2" 
+                placeholder="Search tutor name" 
+                value="{{ search_query|default:'' }}">
+            <button type="submit" class="btn btn-primary">Search</button>
+        </form>
+    </div>
     <div class="table-responsive text-nowrap w-100">
       <table class="table text-center">
         <thead>
@@ -30,34 +41,39 @@
           </tr>
         </thead>
         <tbody class="table-border-bottom-0">          
-          {% for item in tutor %}
-            <tr class="table-default">
-            <td><strong>{{item.FullName}}</strong></td>
-            <td>{{item.BirthDate}}</td>
-            <td>{{item.Phone}}</td>
-            <td>{{item.Email}}</td>
-            <td>{{item.Gender}}</td>
-            <td>{{item.Degree}}</td>
-            <td>
-              <button type="button" class="btn">
-                  {% if item.Username and item.Username != "" %}
-                      <a href="{% url 'student-book' item.Username %}">
-                          <i class="bx bx-calendar me-1"></i>
-                      </a>
-                  {% else %}
-                      <span>No Username</span> <!-- Nếu không có Username -->
-                  {% endif %}
-              </button>
-          </td>         
-          </tr>
-          {% endfor %}
+          {% if tutor %}
+              {% for item in tutor %}
+              <tr class="table-default">
+                <td><strong>{{ item.FullName }}</strong></td>
+                <td>{{ item.BirthDate }}</td>
+                <td>{{ item.Phone }}</td>
+                <td>{{ item.Email }}</td>
+                <td>{{ item.Gender }}</td>
+                <td>{{ item.Degree }}</td>
+                <td>
+                  <button type="button" class="btn">
+                      {% if item.Username and item.Username != "" %}
+                          <a href="{% url 'student-book' item.Username %}">
+                              <i class="bx bx-calendar me-1"></i>
+                          </a>
+                      {% else %}
+                          <span>No Username</span>
+                      {% endif %}
+                  </button>
+                </td>         
+              </tr>
+              {% endfor %}
+          {% else %}
+              <tr>
+                  <td colspan="7" class="text-center">No tutors found</td>
+              </tr>
+          {% endif %}
         </tbody>
       </table>
     </div>
-  </div>
-{%endblock%}
+</div>
+{% endblock %}
 
-{%block left-menu%} 
+{% block left-menu %} 
     {% include "../includes/left-menu.html" %}
-{%endblock%}
-
+{% endblock %}

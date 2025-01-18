@@ -8,6 +8,7 @@ from student.models import Student
 from booking.models import Booking
 from django.shortcuts import get_object_or_404
 from django.views.decorators.csrf import csrf_exempt
+from django.contrib import messages
 
 # Create your views here.
 
@@ -15,10 +16,17 @@ def home (request):
     return render(request, 'home/index.html')
 
 def tutor(request):
-    tutor = Tutor.objects.all()
+    search_query = request.GET.get('search', '')
+
+    if search_query:
+        tutor = Tutor.objects.filter(FullName__icontains=search_query)
+    else:
+        tutor = Tutor.objects.all()
+
     template = loader.get_template('tutor/tutor-index.html')
     context = {
-        'tutor': tutor
+        'tutor': tutor,
+        'search_query': search_query,
     }
     return HttpResponse(template.render(context, request))
 
@@ -195,4 +203,19 @@ def student_schedule(request):
 def delete_booking(request, booking_id):
     booking = get_object_or_404(Booking, id=booking_id)
     booking.delete()
+    return redirect('student-schedule')
+
+def leave_feedback(request, booking_id):
+    booking = get_object_or_404(Booking, id=booking_id)
+
+    if request.method == 'POST':
+        feedback = request.POST.get('feedback')
+
+        if feedback:
+            booking.feedback = feedback
+            booking.save()
+            messages.success(request, "Feedback submitted successfully.")
+        else:
+            messages.error(request, "Feedback cannot be empty.")
+
     return redirect('student-schedule')

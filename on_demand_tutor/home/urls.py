@@ -11,4 +11,5 @@ urlpatterns = [
     path('student-book/<str:tutor_username>/', views.student_book, name='student-book'),
     path('student-schedule/', views.student_schedule, name='student-schedule'),
     path('delete-booking/<int:booking_id>/', views.delete_booking, name='delete-booking'),
+    path('leave-feedback/<int:booking_id>/', views.leave_feedback, name='leave-feedback'),
 ]
