@@ -18,7 +18,8 @@ from django.urls import path, include
 from tutor import views
 urlpatterns = [
     path('admin/', admin.site.urls),
-    # path('', include('tutor.urls')),
-    # path('', include('student.urls')),
-    path('', include('home.urls')),
+    path('tutor/', include('tutor.urls')),  # Đường dẫn cho tutor
+    path('student/', include('student.urls')),  # Đường dẫn cho student
+    path('', include('home.urls')),  # Đường dẫn cho home (trang chủ)
+    path('moderator/', include('moderator.urls')),  # Đường dẫn cho moderator
 ]

@@ -1,3 +1,8 @@
-from django.shortcuts import render
+# moderator/views.py
 
-# Create your views here.
+from django.shortcuts import render
+from django.http import HttpResponse
+
+def Moderator(request):
+    return HttpResponse("Hello moderator!")
+

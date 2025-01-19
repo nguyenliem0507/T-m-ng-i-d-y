@@ -9,10 +9,12 @@ from booking.models import Booking
 from django.shortcuts import get_object_or_404
 from django.views.decorators.csrf import csrf_exempt
 from django.contrib import messages
+from moderator.models import Moderator
+
 
 # Create your views here.
 
-def home (request):
+def home(request):
     return render(request, 'home/index.html')
 
 def tutor(request):
@@ -142,7 +144,13 @@ def tutor_edited(request):
 
 def student_edited(request):
     username = request.session.get('username')
-    student = get_object_or_404(Student, Username=username)
+    if not username:
+        return redirect('/student-login')
+
+    try:
+        student = Student.objects.get(Username=username)
+    except Student.DoesNotExist:
+        return HttpResponse("Student not found.")
 
     if request.method == 'POST':
         email = request.POST.get('email')
@@ -157,6 +165,7 @@ def student_edited(request):
             student.Password = password
 
         student.save()
+        messages.success(request, "Your profile has been updated successfully.")
         return redirect('/student-edited')
 
     return render(request, 'student/student-edited.html', {'student': student})
@@ -164,6 +173,9 @@ def student_edited(request):
 def student_book(request, tutor_username):
     username = request.session.get('username')
     
+    if not username:
+        return redirect('/student-login')
+
     # Lấy tutor theo username
     tutor = get_object_or_404(Tutor, Username=tutor_username)
     student = get_object_or_404(Student, Username=username)
@@ -193,6 +205,9 @@ def student_book(request, tutor_username):
 
 def student_schedule(request):
     username = request.session.get('username')
+    if not username:
+        return redirect('/student-login')
+
     student = get_object_or_404(Student, Username=username)  
 
     bookings = Booking.objects.filter(student=student).select_related('tutor')
@@ -219,3 +234,46 @@ def leave_feedback(request, booking_id):
             messages.error(request, "Feedback cannot be empty.")
 
     return redirect('student-schedule')
+
+def moderator_login(request):
+    if request.method == 'POST':
+        username = request.POST['username']
+        password = request.POST['password']
+
+        try:
+            moderator = Moderator.objects.get(Username=username)
+
+            if moderator.Password == password:
+                request.session['username'] = username
+                return redirect('/moderator-feedback')  # Thay đổi URL tới dashboard của Moderator
+            else:
+                return HttpResponse("Invalid credentials. Please check your username or password.")
+        except Moderator.DoesNotExist:
+            return HttpResponse("Invalid credentials. Please check your username or password.")
+
+    return render(request, 'moderator/moderator-login.html')  # Chuyển đến template login của moderator
+
+def moderator_feedback(request):
+    # Kiểm tra session của moderator
+    username = request.session.get('username')
+    if not username:
+        return redirect('/moderator-login')
+
+    # Lấy danh sách feedback chưa được duyệt
+    feedbacks = Booking.objects.filter(feedback__isnull=False, approved=False).select_related('student', 'tutor')
+
+    context = {
+        'feedbacks': feedbacks,
+    }
+    return render(request, 'moderator/moderator-feedback.html', context)
+
+def approve_feedback(request, id):
+    booking = get_object_or_404(Booking, id=id)
+    
+    # Phê duyệt feedback
+    booking.approved = True
+    booking.save()
+    
+    # Quay lại trang moderator feedback
+    return redirect('moderator_feedback')
+

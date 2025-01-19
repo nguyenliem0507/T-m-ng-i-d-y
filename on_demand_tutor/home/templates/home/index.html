@@ -1,31 +1,42 @@
 {% extends "master.html" %} 
 {%block content%}
 <div class="container text-center py-5">
-  <h1 class="mb-5">Choose Your Role</h1>
-  <div class="row justify-content-center g-4">
-      <!-- Student Card -->
-      <div class="col-12 col-md-4">
-        <a href="{% url 'login' %}" class="text-decoration-none">
-              <div class="card p-4 border-0 shadow-sm">
-                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="text-primary mx-auto">
-                      <path d="M12 2L1 7l11 5 9-4.09V17h2V7L12 2zm0 2.18L18.74 7 12 10.82 5.26 7 12 4.18zM5 8.82l7 3.18 7-3.18V9l-7 3.18L5 9v-.18zM5 11.82l7 3.18 7-3.18V12l-7 3.18L5 12v-.18zM5 14.82l7 3.18 7-3.18V15l-7 3.18L5 15v-.18z"/>
-                  </svg>
-                  <h5 class="card-title text-dark">Student</h5>
-              </div>
-          </a>
-      </div>
-      <!-- Tutor Card -->
-      <div class="col-12 col-md-4">
-          <a href="{% url 'tutor-login' %}" class="text-decoration-none">
-              <div class="card p-4 border-0 shadow-sm">
-                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="text-success mx-auto">
-                      <path d="M20 20H4a1 1 0 01-1-1V7a1 1 0 01.553-.894l8-4a1 1 0 01.894 0l8 4A1 1 0 0121 7v12a1 1 0 01-1 1zM5 8v10h14V8l-7-3.5L5 8zm7 3a2 2 0 110 4 2 2 0 010-4z"/>
-                  </svg>
-                  <h5 class="card-title text-dark">Tutor</h5>
-              </div>
-          </a>
-      </div>
+    <h1 class="mb-5">Choose Your Role</h1>
+    <div class="row justify-content-center g-4">
+        <!-- Student Card -->
+        <div class="col-12 col-md-4">
+          <a href="{% url 'login' %}" class="text-decoration-none">
+                <div class="card p-4 border-0 shadow-sm">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="text-primary mx-auto role-icon">
+                        <path d="M12 2L1 7l11 5 9-4.09V17h2V7L12 2zm0 2.18L18.74 7 12 10.82 5.26 7 12 4.18zM5 8.82l7 3.18 7-3.18V9l-7 3.18L5 9v-.18zM5 11.82l7 3.18 7-3.18V12l-7 3.18L5 12v-.18zM5 14.82l7 3.18 7-3.18V15l-7 3.18L5 15v-.18z"/>
+                    </svg>
+                    <h5 class="card-title text-dark">Student</h5>
+                </div>
+            </a>
+        </div>
+        <!-- Tutor Card -->
+        <div class="col-12 col-md-4">
+            <a href="{% url 'tutor-login' %}" class="text-decoration-none">
+                <div class="card p-4 border-0 shadow-sm">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="text-success mx-auto role-icon">
+                        <path d="M20 20H4a1 1 0 01-1-1V7a1 1 0 01.553-.894l8-4a1 1 0 01.894 0l8 4A1 1 0 0121 7v12a1 1 0 01-1 1zM5 8v10h14V8l-7-3.5L5 8zm7 3a2 2 0 110 4 2 2 0 010-4z"/>
+                    </svg>
+                    <h5 class="card-title text-dark">Tutor</h5>
+                </div>
+            </a>
+        </div>
+        <!-- Moderator Card -->
+        <div class="col-12 col-md-4">
+            <a href="{% url 'moderator-login' %}" class="text-decoration-none">
+                <div class="card p-4 border-0 shadow-sm">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="text-warning mx-auto role-icon">
+                        <path d="M12 2a7 7 0 00-7 7v5a7 7 0 0014 0V9a7 7 0 00-7-7zm0 2a5 5 0 015 5v5a5 5 0 01-10 0V9a5 5 0 015-5zm0 1.5a3.5 3.5 0 00-3.5 3.5v5a3.5 3.5 0 007 0V9a3.5 3.5 0 00-3.5-3.5z"/>
+                    </svg>
+                    <h5 class="card-title text-dark">Moderator</h5>
+                </div>
+            </a>
+        </div>
+    </div>
   </div>
-</div>
 {%endblock%}
 

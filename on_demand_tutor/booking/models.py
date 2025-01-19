@@ -9,6 +9,7 @@ class Booking(models.Model):
     end_date = models.DateField()
     created_at = models.DateTimeField(auto_now_add=True)
     feedback = models.TextField(null=True, blank=True)
+    approved = models.BooleanField(default=False)
 
     def __str__(self):
         return f"Student: {self.student.FullName} - Tutor: {self.tutor.FullName} - From: {self.start_date} to {self.end_date}"
