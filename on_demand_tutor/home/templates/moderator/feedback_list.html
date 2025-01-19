@@ -1,0 +1,23 @@
+<h1>Pending Feedbacks</h1>
+<table>
+    <tr>
+        <th>Student</th>
+        <th>Tutor</th>
+        <th>Content</th>
+        <th>Start Date</th>
+        <th>End Date</th>
+        <th>Actions</th>
+    </tr>
+    {% for feedback in feedbacks %}
+    <tr>
+        <td>{{ feedback.student.username }}</td>
+        <td>{{ feedback.tutor.username }}</td>
+        <td>{{ feedback.content }}</td>
+        <td>{{ feedback.start_date }}</td>
+        <td>{{ feedback.end_date }}</td>
+        <td>
+            <a href="{% url 'approve_feedback' feedback.id %}">Approve</a>
+        </td>
+    </tr>
+    {% endfor %}
+</table>
