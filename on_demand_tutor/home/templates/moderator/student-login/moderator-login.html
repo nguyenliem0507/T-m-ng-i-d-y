@@ -1,0 +1,131 @@
+{% extends "master.html" %}
+{% block content %}
+<div class="container mt-5">
+  <h2 class="text-center mb-4">Moderator Login or Register</h2>
+  <ul class="nav nav-tabs" id="myTab" role="tablist">
+    <li class="nav-item" role="presentation">
+      <button
+        class="nav-link active"
+        id="login-tab"
+        data-bs-toggle="tab"
+        data-bs-target="#login"
+        type="button"
+        role="tab"
+      >
+        Login
+      </button>
+    </li>
+    <li class="nav-item" role="presentation">
+      <button
+        class="nav-link"
+        id="register-tab"
+        data-bs-toggle="tab"
+        data-bs-target="#register"
+        type="button"
+        role="tab"
+      >
+        Register
+      </button>
+    </li>
+  </ul>
+  <div class="tab-content mt-4" id="myTabContent">
+    <!-- Login Form -->
+    <div class="tab-pane fade show active" id="login" role="tabpanel">
+      <form method="post" action="{% url 'moderator_login' %}">
+        {% csrf_token %}
+        <div class="mb-3">
+          <label for="loginUsername" class="form-label">Username</label>
+          <input
+            type="text"
+            class="form-control"
+            id="loginUsername"
+            name="username"
+            placeholder="Enter your username"
+            required
+          />
+        </div>
+        <div class="mb-3">
+          <label for="loginPassword" class="form-label">Password</label>
+          <input
+            type="password"
+            class="form-control"
+            id="loginPassword"
+            name="password"
+            placeholder="Enter your password"
+            required
+          />
+        </div>
+        <button type="submit" class="btn btn-primary w-100">Login</button>
+
+        {% if error_message %}
+        <div class="alert alert-danger mt-3" role="alert">
+          {{ error_message }}
+        </div>
+        {% endif %}
+      </form>
+    </div>
+    <!-- Register Form -->
+    <div class="tab-pane fade" id="register" role="tabpanel">
+      <form method="post" action="{% url 'moderator_register' %}">
+        {% csrf_token %}
+        <div class="mb-3">
+          <label for="username" class="form-label">Username</label>
+          <input
+            type="text"
+            class="form-control"
+            id="username"
+            name="username"
+            placeholder="Enter your username"
+            required
+          />
+        </div>
+        <div class="mb-3">
+          <label for="password" class="form-label">Password</label>
+          <input
+            type="password"
+            class="form-control"
+            id="password"
+            name="password"
+            placeholder="Enter your password"
+            required
+          />
+        </div>
+        <div class="mb-3">
+          <label for="fullname" class="form-label">Full Name</label>
+          <input
+            type="text"
+            class="form-control"
+            id="fullname"
+            name="fullname"
+            placeholder="Enter your full name"
+            required
+          />
+        </div>
+        <div class="mb-3">
+          <label for="phone" class="form-label">Phone Number</label>
+          <input
+            type="text"
+            class="form-control"
+            id="phone"
+            name="phone"
+            placeholder="Enter your phone number"
+            required
+          />
+        </div>
+        <div class="mb-3">
+          <label for="email" class="form-label">Email</label>
+          <input
+            type="email"
+            class="form-control"
+            id="email"
+            name="email"
+            placeholder="Enter your email"
+            required
+          />
+        </div>
+        <button type="submit" class="btn btn-success w-100">Register</button>
+      </form>
+    </div>
+  </div>
+</div>
+{% endblock %}

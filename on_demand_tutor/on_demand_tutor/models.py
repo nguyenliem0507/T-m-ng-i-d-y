@@ -24,3 +24,13 @@ class User(models.Model):
         ],
     )
     Email = models.EmailField(max_length=255)
+    ROLE_CHOICES = [
+        ('student', 'Student'),
+        ('tutor', 'Tutor'),
+        ('moderator', 'Moderator'),
+    ]
+    Role = models.CharField(
+        max_length=10,
+        choices=ROLE_CHOICES,
+        default='student',
+    )

@@ -6,8 +6,8 @@ https://docs.djangoproject.com/en/5.1/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.1/ref/settings/
 """
-# import pymysql
-# pymysql.install_as_MySQLdb()
+#import pymysql
+#pymysql.install_as_MySQLdb()
 from pathlib import Path
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -33,7 +33,7 @@ INSTALLED_APPS = [
     'on_demand_tutor',
     'admin_app',
     'home',
-    'booking',
+    'booking'
 ]
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -65,12 +65,12 @@ WSGI_APPLICATION = 'on_demand_tutor.wsgi.application'
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
 DATABASES = {
     'default': {
-        'ENGINE': 'mysql.connector.django',
-        'NAME': 'DemandTutorDB',
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'doan',
         'USER': 'root',
-        'PASSWORD': '0507',
+        'PASSWORD': '09092005',
         'HOST': '127.0.0.1',
-        'PORT': '3307'
+        'PORT': '3306',
     }
 }
 # Password validation

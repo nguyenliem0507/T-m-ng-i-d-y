@@ -21,4 +21,5 @@ urlpatterns = [
     # path('', include('tutor.urls')),
     # path('', include('student.urls')),
     path('', include('home.urls')),
+    path('moderator/', include('moderator.urls')),
 ]
