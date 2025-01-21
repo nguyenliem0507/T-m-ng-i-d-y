@@ -1,0 +1,15 @@
+<h1>Tutor Schedule</h1>
+<table>
+    <tr>
+        <th>Student</th>
+        <th>Start Date</th>
+        <th>End Date</th>
+    </tr>
+    {% for feedback in feedbacks %}
+    <tr>
+        <td>{{ feedback.student.username }}</td>
+        <td>{{ feedback.start_date }}</td>
+        <td>{{ feedback.end_date }}</td>
+    </tr>
+    {% endfor %}
+</table>

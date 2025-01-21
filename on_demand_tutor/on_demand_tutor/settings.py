@@ -71,7 +71,11 @@ WSGI_APPLICATION = 'on_demand_tutor.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
+<<<<<<< HEAD
         'NAME':'chickenplus',
+=======
+        'NAME': 'chickenplus',
+>>>>>>> de40e0de84f38c82996260d58216667aca0ab435
         'USER': 'root',
         'PASSWORD': '123456',
         'HOST': '127.0.0.1',
