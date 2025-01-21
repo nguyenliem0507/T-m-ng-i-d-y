@@ -9,6 +9,7 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 #import pymysql
 #pymysql.install_as_MySQLdb()
 from pathlib import Path
+import os
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 # Quick-start development settings - unsuitable for production
@@ -48,8 +49,10 @@ ROOT_URLCONF = 'on_demand_tutor.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
-        'APP_DIRS': True,
+        'DIRS': [
+            os.path.join(BASE_DIR, 'home/templates'),
+        ],
+        'APP_DIRS': True,  
         'OPTIONS': {
             'context_processors': [
                 'django.template.context_processors.debug',
@@ -60,15 +63,17 @@ TEMPLATES = [
         },
     },
 ]
+
+
 WSGI_APPLICATION = 'on_demand_tutor.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'doan',
+        'NAME':'chickenplus',
         'USER': 'root',
-        'PASSWORD': '09092005',
+        'PASSWORD': '123456',
         'HOST': '127.0.0.1',
         'PORT': '3306',
     }

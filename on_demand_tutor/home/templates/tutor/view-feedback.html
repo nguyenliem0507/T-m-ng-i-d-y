@@ -1,0 +1,33 @@
+{% extends "master.html" %}
+
+{% block content %}
+<div class="container" style="margin-top: 70px;">
+    <h2>Approved Feedback</h2>
+    {% if approved_feedbacks %}
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Student</th>
+                    <th>Feedback</th>
+                    <th>Booking Start Date</th>
+                    <th>Booking End Date</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for feedback in approved_feedbacks %}
+                <tr>
+                    <td>{{ forloop.counter }}</td>
+                    <td>{{ feedback.student.FullName }}</td>
+                    <td>{{ feedback.feedback }}</td>
+                    <td>{{ feedback.start_date }}</td>
+                    <td>{{ feedback.end_date }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <p>No approved feedback available.</p>
+    {% endif %}
+</div>
+{% endblock %}
