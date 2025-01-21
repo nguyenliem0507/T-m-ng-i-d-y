@@ -16,11 +16,6 @@ urlpatterns = [
     path('moderator-login/', views.moderator_login, name='moderator-login'),
     path('moderator-feedback/', views.moderator_feedback, name='moderator_feedback'),
     path('approve-feedback/<int:id>/', views.approve_feedback, name='approve_feedback'),
-<<<<<<< HEAD
     path('tutor-feedback/', views.view_approved_feedback, name='tutor-feedback'),
 ]
 
-=======
-
-]
->>>>>>> de40e0de84f38c82996260d58216667aca0ab435

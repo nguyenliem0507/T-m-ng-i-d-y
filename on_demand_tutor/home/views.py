@@ -10,12 +10,7 @@ from django.shortcuts import get_object_or_404
 from django.views.decorators.csrf import csrf_exempt
 from django.contrib import messages
 from moderator.models import Moderator
-<<<<<<< HEAD
 from django.contrib.auth.decorators import login_required
-=======
-
-
->>>>>>> de40e0de84f38c82996260d58216667aca0ab435
 # Create your views here.
 
 def home(request):
@@ -281,7 +276,6 @@ def approve_feedback(request, id):
     # Quay lại trang moderator feedback
     return redirect('moderator_feedback')
 
-<<<<<<< HEAD
 @login_required(login_url='/tutor-login/')
 def view_approved_feedback(request):
     username = request.session.get('username')
@@ -302,5 +296,3 @@ def view_approved_feedback(request):
         'approved_feedbacks': approved_feedbacks
     }
     return render(request, 'tutor/view-feedback.html', context)
-=======
->>>>>>> de40e0de84f38c82996260d58216667aca0ab435
