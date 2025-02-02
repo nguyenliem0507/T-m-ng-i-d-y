@@ -276,7 +276,7 @@ def approve_feedback(request, id):
     # Quay lại trang moderator feedback
     return redirect('moderator_feedback')
 
-@login_required(login_url='/tutor-login/')
+
 def view_approved_feedback(request):
     username = request.session.get('username')
     if not username:
