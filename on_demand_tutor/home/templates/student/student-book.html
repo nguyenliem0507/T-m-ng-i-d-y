@@ -7,22 +7,31 @@
             <h5 class="mb-0"><strong>Schedule Tutoring Sessions</strong></h5> 
         </div>
         <div class="card-body">
+            <!-- Hiển thị thông báo -->
+            {% if messages %}
+                {% for message in messages %}
+                <div class="alert {% if message.tags == 'success' %}alert-success{% else %}alert-danger{% endif %}">
+                    {{ message }}
+                </div>
+                {% endfor %}
+            {% endif %}
+
             <form method="post">
                 {% csrf_token %}
                 
-                <!-- Hiển thị Full Name của Tutor -->
+                <!-- Hiển thị thông tin Tutor -->
                 <div class="mb-3">
                     <label class="form-label">Tutor</label>
                     <input type="text" class="form-control" value="{{ tutor.FullName }}" readonly>
                 </div>
 
-                <!-- Start Date -->
+                <!-- Ngày bắt đầu -->
                 <div class="mb-3">
                     <label for="start_date" class="form-label">Start Date</label>
                     <input type="date" class="form-control" id="start_date" name="start_date" required>
                 </div>
 
-                <!-- End Date -->
+                <!-- Ngày kết thúc -->
                 <div class="mb-3">
                     <label for="end_date" class="form-label">End Date</label>
                     <input type="date" class="form-control" id="end_date" name="end_date" required>
@@ -30,6 +39,21 @@
 
                 <button type="submit" class="btn btn-primary">Save</button>
             </form>
+
+            <!-- Hiển thị chi tiết thanh toán nếu có -->
+            {% if total_cost is not None %}
+            <div class="card mt-4">
+                <div class="card-header">
+                    <h5>Booking Details</h5>
+                </div>
+                <div class="card-body">
+                    <p><strong>Duration:</strong> {{ duration_days }} days</p>
+                    <p><strong>Daily Rate:</strong> 10 USD/day</p>
+                    <p><strong>Total Cost:</strong> {{ total_cost }} USD</p>
+                    <p><strong>Current Wallet Balance:</strong> {{ balance }} USD</p>
+                </div>
+            </div>
+            {% endif %}
         </div>
     </div>
 </div>

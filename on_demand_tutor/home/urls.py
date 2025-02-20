@@ -17,5 +17,8 @@ urlpatterns = [
     path('moderator-feedback/', views.moderator_feedback, name='moderator_feedback'),
     path('approve-feedback/<int:id>/', views.approve_feedback, name='approve_feedback'),
     path('tutor-feedback/', views.view_approved_feedback, name='tutor-feedback'),
+    path('wallet/', views.wallet_view, name='wallet-view'),
+    path('wallet/add-funds/', views.add_funds, name='add-funds'),
+    path('wallet/view-balance/', views.view_balance, name='view-balance'),
 ]
 

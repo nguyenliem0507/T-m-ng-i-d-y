@@ -11,8 +11,8 @@ driver.maximize_window()
 
 
 student_data_login = {
-    'username': 'student1',
-    'password': '@admin123'
+    'username': 'vinh',
+    'password': '09092005'
 }
 
 student_data_reg = {
@@ -28,13 +28,13 @@ student_data_reg = {
 }
 
 tutor_data_login = {
-    'username': 'tutor1',
-    'password': '@admin123'
+    'username': 'Nguyễn Văn A',
+    'password': '09092005'
 }
 
 moderator_data_login = {
-    'username': 'moderator1',
-    'password': '@admin123'
+    'username': 'moderator',
+    'password': '09092005'
 }
 
 

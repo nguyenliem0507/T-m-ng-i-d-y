@@ -11,6 +11,7 @@ from django.views.decorators.csrf import csrf_exempt
 from django.contrib import messages
 from moderator.models import Moderator
 from django.contrib.auth.decorators import login_required
+from datetime import datetime
 # Create your views here.
 
 def home(request):
@@ -169,27 +170,41 @@ def student_edited(request):
 
     return render(request, 'student/student-edited.html', {'student': student})
 
+from django.contrib import messages
+
 def student_book(request, tutor_username):
     username = request.session.get('username')
-    
+
     if not username:
         return redirect('/student-login')
 
-    # Lấy tutor theo username
     tutor = get_object_or_404(Tutor, Username=tutor_username)
     student = get_object_or_404(Student, Username=username)
+
+    total_cost = None  # Biến để lưu tổng chi phí
 
     if request.method == 'POST':
         start_date = request.POST.get('start_date')
         end_date = request.POST.get('end_date')
 
-        # Kiểm tra nếu lịch đã trùng
+        start_date = datetime.strptime(start_date, "%Y-%m-%d")
+        end_date = datetime.strptime(end_date, "%Y-%m-%d")
+        duration_days = (end_date - start_date).days + 1
+
+        daily_rate = tutor.daily_rate if hasattr(tutor, 'daily_rate') else 10
+        total_cost = duration_days * daily_rate
+
+        # Kiểm tra trùng lịch
         if Booking.objects.filter(
             tutor=tutor, start_date__lte=end_date, end_date__gte=start_date
         ).exists():
             return HttpResponse("This tutor is already booked for the selected time.")
 
-        # Tạo booking mới
+        # Kiểm tra số dư
+        if student.balance < total_cost:
+            return HttpResponse("Insufficient balance to book this session.")
+
+        # Lưu lịch hẹn và trừ số dư
         booking = Booking(
             student=student,
             tutor=tutor,
@@ -198,9 +213,25 @@ def student_book(request, tutor_username):
         )
         booking.save()
 
-        return redirect('/tutor-index')
+        student.balance -= total_cost
+        student.save()
+
+        # Thêm thông báo thành công
+        messages.success(request, "Booking saved successfully!")
+
+        # Hiển thị bảng thanh toán sau khi lưu thành công
+        return render(request, 'student/student-book.html', {
+            'tutor': tutor,
+            'total_cost': total_cost,
+            'duration_days': duration_days,
+            'start_date': start_date,
+            'end_date': end_date,
+            'success': True
+        })
 
     return render(request, 'student/student-book.html', {'tutor': tutor})
+
+
 
 def student_schedule(request):
     username = request.session.get('username')
@@ -296,3 +327,51 @@ def view_approved_feedback(request):
         'approved_feedbacks': approved_feedbacks
     }
     return render(request, 'tutor/view-feedback.html', context)
+
+@login_required
+def add_funds(request):
+    username = request.session.get('username')
+    if not username:
+        return redirect('/student-login')
+
+    student = get_object_or_404(Student, Username=username)
+
+    if request.method == 'POST':
+        amount = request.POST.get('amount', 0)
+        try:
+            amount = float(amount)
+            if amount <= 0:
+                messages.error(request, "Số tiền phải lớn hơn 0.")
+            else:
+                # Cộng số tiền và lưu vào DB
+                student.balance += amount
+                student.save()
+                messages.success(request, f"Thêm {amount} USD vào ví thành công.")
+        except ValueError:
+            messages.error(request, "Số tiền không hợp lệ.")
+
+    # Truyền số dư mới nhất vào template
+    return render(request, 'wallet/add_funds.html', {'balance': student.balance})
+
+
+@login_required
+def view_balance(request):
+    balance = request.session.get('balance', 0)
+    return render(request, 'wallet/view_balance.html', {'balance': balance})
+from student.models import Student
+
+def wallet_view(request):
+    username = request.session.get('username')
+    if not username:
+        return redirect('/student-login')
+
+    try:
+        student = Student.objects.get(Username=username)
+        user_balance = student.balance
+    except Student.DoesNotExist:
+        return HttpResponse("Không tìm thấy thông tin sinh viên.")
+
+    context = {
+        'balance': user_balance,
+    }
+    return render(request, 'student/student-wallet.html', context)
