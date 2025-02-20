@@ -20,5 +20,6 @@ urlpatterns = [
     path('wallet/', views.wallet_view, name='wallet-view'),
     path('wallet/add-funds/', views.add_funds, name='add-funds'),
     path('wallet/view-balance/', views.view_balance, name='view-balance'),
+    path('tutor-scheduled/', views.tutor_scheduled, name='tutor-scheduled'),
 ]
 

@@ -1,0 +1,35 @@
+{% extends "master.html" %}
+
+{% block content %}
+<div class="container" style="margin-top: 70px;">
+    <div class="card">
+        <div class="card-header">
+            <h5 class="mb-0"><strong>Scheduled Students</strong></h5>
+        </div>
+        <div class="card-body">
+            {% if bookings %}
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th>Student Name</th>
+                            <th>Start Date</th>
+                            <th>End Date</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for booking in bookings %}
+                            <tr>
+                                <td>{{ booking.student.FullName }}</td>
+                                <td>{{ booking.start_date }}</td>
+                                <td>{{ booking.end_date }}</td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            {% else %}
+                <p>No students have scheduled lessons with you.</p>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -375,3 +375,18 @@ def wallet_view(request):
         'balance': user_balance,
     }
     return render(request, 'student/student-wallet.html', context)
+
+def tutor_scheduled(request):
+    username = request.session.get('username')
+    if not username:
+        return redirect('/tutor-login/')
+
+    tutor = get_object_or_404(Tutor, Username=username)
+
+    # Lấy danh sách các booking của tutor này
+    bookings = Booking.objects.filter(tutor=tutor).select_related('student')
+
+    context = {
+        'bookings': bookings
+    }
+    return render(request, 'tutor/view-scheduled.html', context)
