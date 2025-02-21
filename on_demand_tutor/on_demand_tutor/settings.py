@@ -70,12 +70,12 @@ WSGI_APPLICATION = 'on_demand_tutor.wsgi.application'
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
 DATABASES = {
     'default': {
-        'ENGINE': 'mysql.connector.django',
-        'NAME': 'DemandTutorDB',
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'doan',
         'USER': 'root',
-        'PASSWORD': '0507',
+        'PASSWORD': '09092005',
         'HOST': '127.0.0.1',
-        'PORT': '3307'
+        'PORT': '3306'
     }
 }
 # Password validation
