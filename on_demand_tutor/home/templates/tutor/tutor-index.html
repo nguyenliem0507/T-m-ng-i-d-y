@@ -36,7 +36,8 @@
             <th>Phone</th>
             <th>Email</th>
             <th>Gender</th>
-            <th>Degree/Certificate</th>            
+            <th>Subjects</th>
+            <th>Degree/Certificate</th>             
             <th>Book</th>            
           </tr>
         </thead>
@@ -49,6 +50,7 @@
                 <td>{{ item.Phone }}</td>
                 <td>{{ item.Email }}</td>
                 <td>{{ item.Gender }}</td>
+                <td>{{ item.Subjects }}</td>
                 <td>{{ item.Degree }}</td>
                 <td>
                   <button type="button" class="btn">
@@ -65,7 +67,7 @@
               {% endfor %}
           {% else %}
               <tr>
-                  <td colspan="7" class="text-center">No tutors found</td>
+                  <td colspan="8" class="text-center">No tutors found</td>
               </tr>
           {% endif %}
         </tbody>
